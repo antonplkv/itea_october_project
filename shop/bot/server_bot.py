@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 from mongoengine import NotUniqueError
 from telebot.types import Update, ReplyKeyboardMarkup, KeyboardButton
-import config
+from .config import TOKEN, WEBHOOK_URI
 from telebot import TeleBot
 import time
 
@@ -9,10 +9,10 @@ from shop.bot import constants
 from shop.models.shop_models import User
 
 app = Flask(__name__)
-bot = TeleBot(config.TOKEN)
+bot = TeleBot(TOKEN)
 
 
-@app.route(config.WEBHOOK_URI, methods=['POST'])
+@app.route(WEBHOOK_URI, methods=['POST'])
 def handle_webhook():
     if request.headers.get('content-type') == 'application/json':
         json_string = request.get_data()
